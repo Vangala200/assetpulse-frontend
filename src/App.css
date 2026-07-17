@@ -1,0 +1,416 @@
+/* =========================
+   GOOGLE FONT
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* =========================
+   RESET
+========================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    background:linear-gradient(-45deg,#0f172a,#2563eb,#6d28d9,#06b6d4);
+    background-size:400% 400%;
+    animation:gradientBG 15s ease infinite;
+}
+
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-100;
+}
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.45;
+}
+
+.blob1{
+    width:350px;
+    height:350px;
+    background:#00d4ff;
+    top:-100px;
+    left:-80px;
+    animation:blob1 18s infinite alternate;
+}
+
+.blob2{
+    width:300px;
+    height:300px;
+    background:#8b5cf6;
+    top:100px;
+    right:-100px;
+    animation:blob2 16s infinite alternate;
+}
+
+.blob3{
+    width:250px;
+    height:250px;
+    background:#00ff99;
+    bottom:-80px;
+    left:40%;
+    animation:blob3 14s infinite alternate;
+}
+
+.stars{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-image:
+        radial-gradient(white 1px,transparent 1px);
+    background-size:40px 40px;
+    opacity:.2;
+    animation:starsMove 40s linear infinite;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+    height:70px;
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:100;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 35px;
+
+    background:rgba(20,30,60,.6);
+    backdrop-filter:blur(15px);
+
+    color:white;
+    box-shadow:0 5px 20px rgba(0,0,0,.3);
+
+    animation:slideDown .8s;
+}
+
+.navbar h2{
+    letter-spacing:1px;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    width:240px;
+    position:fixed;
+    top:70px;
+    left:0;
+    bottom:0;
+
+    padding:25px;
+
+    background:rgba(5,20,60,.7);
+    backdrop-filter:blur(20px);
+
+    animation:slideLeft .8s;
+}
+
+.sidebar h2{
+    color:white;
+    margin-bottom:20px;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:14px;
+    margin:10px 0;
+    border-radius:12px;
+    transition:.4s;
+}
+
+.sidebar a:hover{
+    background:rgba(255,255,255,.2);
+    transform:translateX(10px);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main{
+    margin-left:260px;
+    margin-top:90px;
+    padding:30px;
+    animation:fadeUp .8s;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login{
+    width:400px;
+    margin:100px auto;
+    padding:35px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(20px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+    animation:zoom .8s;
+}
+
+.login h2{
+    color:white;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.login input{
+    width:100%;
+    padding:14px;
+    margin:12px 0;
+    border:none;
+    border-radius:10px;
+    outline:none;
+    transition:.4s;
+}
+
+.login input:focus{
+    transform:scale(1.02);
+    box-shadow:0 0 15px cyan;
+}
+
+.login button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+
+    border:none;
+    border-radius:10px;
+
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+    color:white;
+
+    cursor:pointer;
+    transition:.4s;
+}
+
+.login button:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 20px cyan;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.card{
+    padding:25px;
+    margin:20px 0;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(20px);
+
+    color:white;
+
+    transition:.4s;
+    animation:fadeUp .7s;
+}
+
+.card:hover{
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+
+/* =========================
+   FORM
+========================= */
+
+form{
+    padding:25px;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(20px);
+
+    border-radius:20px;
+}
+
+form input,
+form select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+
+    border:none;
+    border-radius:10px;
+}
+
+form button{
+    padding:12px 30px;
+    border:none;
+    border-radius:10px;
+
+    background:#2563eb;
+    color:white;
+
+    cursor:pointer;
+    transition:.4s;
+}
+
+form button:hover{
+    transform:translateY(-3px);
+}
+
+/* =========================
+   TABLE
+========================= */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+
+    border-radius:15px;
+    overflow:hidden;
+}
+
+th{
+    background:#2563eb;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:14px;
+    color:white;
+    text-align:center;
+}
+
+tr{
+    transition:.3s;
+}
+
+tr:hover{
+    background:rgba(255,255,255,.15);
+}
+
+/* =========================
+   BUTTON GLOW
+========================= */
+
+button{
+    position:relative;
+    overflow:hidden;
+}
+
+button::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:rgba(255,255,255,.3);
+    transform:skewX(-25deg);
+}
+
+button:hover::before{
+    left:120%;
+    transition:.7s;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes gradientBG{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+@keyframes slideLeft{
+    from{opacity:0;transform:translateX(-80px);}
+    to{opacity:1;transform:translateX(0);}
+}
+
+@keyframes slideDown{
+    from{opacity:0;transform:translateY(-60px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeUp{
+    from{opacity:0;transform:translateY(40px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes zoom{
+    from{transform:scale(.8);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+@keyframes blob1{
+    from{transform:translate(0,0);}
+    to{transform:translate(120px,100px);}
+}
+
+@keyframes blob2{
+    from{transform:translate(0,0);}
+    to{transform:translate(-120px,80px);}
+}
+
+@keyframes blob3{
+    from{transform:translate(0,0);}
+    to{transform:translate(80px,-80px);}
+}
+
+@keyframes starsMove{
+    from{background-position:0 0;}
+    to{background-position:1000px 500px;}
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+.sidebar{
+    display:none;
+}
+
+.main{
+    margin-left:0;
+}
+
+.login{
+    width:90%;
+}
+
+.navbar{
+    padding:0 20px;
+}
+
+}
