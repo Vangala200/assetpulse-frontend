@@ -1,74 +1,65 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../services/api";
 
-function Login() {
+<div className="auth-page">
+  <section className="auth-branding">
+    <div className="logo">
+      <div className="logo-icon">A</div>
+      AssetPulse
+    </div>
 
-    const navigate = useNavigate();
+    <h1>
+      Manage smarter.
+      <br />
+      <span className="gradient-text">Move faster.</span>
+    </h1>
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    <p>
+      A unified workspace for tracking assets, employee
+      allocations, maintenance, and organizational insights.
+    </p>
 
-    const login = async () => {
+    <div className="auth-feature">
+      <div className="auth-feature-icon">✓</div>
+      Centralized asset management
+    </div>
 
-        try {
+    <div className="auth-feature">
+      <div className="auth-feature-icon">⌁</div>
+      Intelligent reporting and analytics
+    </div>
+  </section>
 
-            const response = await api.post("/login", {
-                username,
-                password
-            });
+  <section className="auth-container">
+    <h2>Welcome back</h2>
+    <p>Sign in to continue to your workspace.</p>
 
-            if (response.data === "Login Successful") {
+    {/* Keep your existing form and handlers here.
+        Use form-group around each input. */}
 
-                alert("Login Successful");
+    <div className="form-group">
+      <label htmlFor="email">Email address</label>
+      <input
+        id="email"
+        type="email"
+        placeholder="you@company.com"
+      />
+    </div>
 
-                navigate("/dashboard");
+    <div className="form-group">
+      <label htmlFor="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        placeholder="Enter your password"
+      />
+    </div>
 
-            } else {
+    <button className="primary-button btn-block">
+      Sign In
+    </button>
 
-                alert("Invalid Credentials");
-
-            }
-
-        } catch (error) {
-
-            alert("Server Error");
-
-            console.log(error);
-
-        }
-
-    };
-
-    return (
-
-        <div className="login">
-
-            <h2>AssetPulse Login</h2>
-
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <button onClick={login}>
-                Login
-            </button>
-            
-
-        </div>
-
-    );
-
-}
-
-export default Login;
+    <div className="auth-links">
+      <a href="/forgot-password">Forgot password?</a>
+      <a href="/register">Create account</a>
+    </div>
+  </section>
+</div>

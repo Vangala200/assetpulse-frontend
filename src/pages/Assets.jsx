@@ -1,196 +1,200 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import api from "../services/api";
 
 function Assets() {
 
-    const [assets, setAssets] = useState([]);
+  const [search, setSearch] = useState("");
 
-    const [asset, setAsset] = useState({
-        assetName: "",
-        category: "",
-        serialNumber: "",
-        status: ""
-    });
+  const assets = [
+    {
+      id: "AST-001",
+      name: "MacBook Pro 14",
+      category: "Laptop",
+      employee: "Rahul Kumar",
+      status: "Assigned",
+    },
+    {
+      id: "AST-002",
+      name: "Dell XPS 15",
+      category: "Laptop",
+      employee: "Priya Sharma",
+      status: "Assigned",
+    },
+    {
+      id: "AST-003",
+      name: "iPhone 15 Pro",
+      category: "Mobile",
+      employee: "Available",
+      status: "Available",
+    },
+    {
+      id: "AST-004",
+      name: "Dell Monitor",
+      category: "Monitor",
+      employee: "Arjun Reddy",
+      status: "Assigned",
+    },
+    {
+      id: "AST-005",
+      name: "Logitech Keyboard",
+      category: "Accessory",
+      employee: "Available",
+      status: "Available",
+    },
+  ];
 
-    useEffect(() => {
-        loadAssets();
-    }, []);
+  const filteredAssets = assets.filter((asset) =>
+    `${asset.name} ${asset.category} ${asset.employee}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
-    // Get All Assets
-    const loadAssets = async () => {
-        try {
-            const response = await api.get("/assets");
-            setAssets(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+  return (
+    <div className="app-layout">
 
-    // Handle Input Change
-    const handleChange = (e) => {
-        setAsset({
-            ...asset,
-            [e.target.name]: e.target.value
-        });
-    };
+      <Sidebar />
 
-    // Save Asset
-    const saveAsset = async (e) => {
-        e.preventDefault();
+      <div className="content-area">
 
-        try {
+        <Navbar />
 
-            await api.post("/assets", asset);
+        <main className="main-content">
 
-            alert("Asset Added Successfully");
+          <div className="page-header">
 
-            setAsset({
-                assetName: "",
-                category: "",
-                serialNumber: "",
-                status: ""
-            });
+            <div>
+              <span className="eyebrow">
+                MANAGEMENT
+              </span>
 
-            loadAssets();
+              <h1>
+                Assets
+              </h1>
 
-        } catch (error) {
+              <p>
+                Manage and track organization assets.
+              </p>
+            </div>
 
-            console.log(error);
+            <button className="primary-button">
+              + Add Asset
+            </button>
 
-        }
+          </div>
 
-    };
 
-    // Delete Asset
-    const deleteAsset = async (id) => {
+          <div className="table-card">
 
-        if (window.confirm("Delete Asset?")) {
+            <div className="table-toolbar">
 
-            await api.delete(`/assets/${id}`);
+              <div>
+                <h2>
+                  All Assets
+                </h2>
 
-            loadAssets();
+                <span>
+                  {filteredAssets.length} assets
+                </span>
+              </div>
 
-        }
+              <div className="table-search">
 
-    };
+                <span>⌕</span>
 
-    return (
+                <input
+                  type="text"
+                  placeholder="Search assets..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
 
-        <>
-            <Navbar />
-            <Sidebar />
-
-            <div className="main">
-
-                <h2>Asset Management</h2>
-
-                <form onSubmit={saveAsset}>
-
-                    <input
-                        type="text"
-                        name="assetName"
-                        placeholder="Asset Name"
-                        value={asset.assetName}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        name="category"
-                        placeholder="Category"
-                        value={asset.category}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        name="serialNumber"
-                        placeholder="Serial Number"
-                        value={asset.serialNumber}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <select
-                        name="status"
-                        value={asset.status}
-                        onChange={handleChange}
-                        required
-                    >
-                        <option value="">Select Status</option>
-                        <option value="Available">Available</option>
-                        <option value="Assigned">Assigned</option>
-                        <option value="Maintenance">Maintenance</option>
-                        <option value="Damaged">Damaged</option>
-                    </select>
-
-                    <button type="submit">
-                        Add Asset
-                    </button>
-
-                </form>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-                            <th>Asset Name</th>
-                            <th>Category</th>
-                            <th>Serial Number</th>
-                            <th>Status</th>
-                            <th>Action</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {assets.map((item) => (
-
-                            <tr key={item.id}>
-
-                                <td>{item.id}</td>
-
-                                <td>{item.assetName}</td>
-
-                                <td>{item.category}</td>
-
-                                <td>{item.serialNumber}</td>
-
-                                <td>{item.status}</td>
-
-                                <td>
-
-                                    <button
-                                        onClick={() => deleteAsset(item.id)}
-                                    >
-                                        Delete
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        ))}
-
-                    </tbody>
-
-                </table>
+              </div>
 
             </div>
 
-        </>
 
-    );
+            <div className="table-wrapper">
 
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Asset ID</th>
+                    <th>Asset</th>
+                    <th>Category</th>
+                    <th>Assigned To</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+
+                  {filteredAssets.map((asset) => (
+
+                    <tr key={asset.id}>
+
+                      <td>
+                        <strong className="asset-id">
+                          {asset.id}
+                        </strong>
+                      </td>
+
+                      <td>
+                        <strong>
+                          {asset.name}
+                        </strong>
+                      </td>
+
+                      <td>
+                        {asset.category}
+                      </td>
+
+                      <td>
+                        {asset.employee}
+                      </td>
+
+                      <td>
+
+                        <span
+                          className={`status ${
+                            asset.status === "Assigned"
+                              ? "status-assigned"
+                              : "status-available"
+                          }`}
+                        >
+                          {asset.status}
+                        </span>
+
+                      </td>
+
+                      <td>
+
+                        <button className="action-button">
+                          ⋮
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  ))}
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </main>
+
+      </div>
+
+    </div>
+  );
 }
 
 export default Assets;

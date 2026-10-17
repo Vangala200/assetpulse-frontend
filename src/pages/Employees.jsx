@@ -1,189 +1,235 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import api from "../services/api";
 
 function Employees() {
 
-    const [employees, setEmployees] = useState([]);
+  const [search, setSearch] = useState("");
 
-    const [employee, setEmployee] = useState({
-        name: "",
-        email: "",
-        department: "",
-        designation: ""
-    });
+  const employees = [
+    {
+      id: "EMP-001",
+      name: "Rahul Kumar",
+      email: "rahul@assetpulse.com",
+      department: "Engineering",
+      assets: 4,
+      status: "Active",
+    },
+    {
+      id: "EMP-002",
+      name: "Priya Sharma",
+      email: "priya@assetpulse.com",
+      department: "Design",
+      assets: 3,
+      status: "Active",
+    },
+    {
+      id: "EMP-003",
+      name: "Arjun Reddy",
+      email: "arjun@assetpulse.com",
+      department: "Finance",
+      assets: 2,
+      status: "Active",
+    },
+    {
+      id: "EMP-004",
+      name: "Sneha Rao",
+      email: "sneha@assetpulse.com",
+      department: "HR",
+      assets: 1,
+      status: "Active",
+    },
+    {
+      id: "EMP-005",
+      name: "Vikram Singh",
+      email: "vikram@assetpulse.com",
+      department: "Marketing",
+      assets: 0,
+      status: "Inactive",
+    },
+  ];
 
-    useEffect(() => {
-        loadEmployees();
-    }, []);
+  const filteredEmployees = employees.filter((employee) =>
+    `${employee.name} ${employee.email} ${employee.department}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
 
-    const loadEmployees = async () => {
-        try {
-            const response = await api.get("/employees");
-            setEmployees(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+  return (
+    <div className="app-layout">
 
-    const handleChange = (e) => {
-        setEmployee({
-            ...employee,
-            [e.target.name]: e.target.value
-        });
-    };
+      <Sidebar />
 
-    const saveEmployee = async (e) => {
-        await api.post("/employees", employee);
+      <div className="content-area">
 
-        loadEmployees();
-    const loadEmployees = async () => {
+        <Navbar />
 
-    const response = await api.get("/employees");
+        <main className="main-content">
 
-    setEmployees(response.data);
+          <div className="page-header">
 
-};
-        e.preventDefault();
+            <div>
 
-        try {
-            await api.post("/employees", employee);
+              <span className="eyebrow">
+                ORGANIZATION
+              </span>
 
-            alert("Employee Added Successfully");
+              <h1>
+                Employees
+              </h1>
 
-            setEmployee({
-                name: "",
-                email: "",
-                department: "",
-                designation: ""
-            });
-
-            loadEmployees();
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const deleteEmployee = async (id) => {
-
-        if (window.confirm("Delete Employee?")) {
-
-            await api.delete(`/employees/${id}`);
-
-            loadEmployees();
-        }
-
-    };
-
-    return (
-
-        <>
-            <Navbar />
-            <Sidebar />
-
-            <div className="main">
-
-                <h2>Employee Management</h2>
-
-                <form onSubmit={saveEmployee}>
-
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Employee Name"
-                        value={employee.name}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        value={employee.email}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        name="department"
-                        placeholder="Department"
-                        value={employee.department}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <input
-                        type="text"
-                        name="designation"
-                        placeholder="Designation"
-                        value={employee.designation}
-                        onChange={handleChange}
-                        required
-                    />
-
-                    <button type="submit">
-                        Add Employee
-                    </button>
-
-                </form>
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Department</th>
-                            <th>Designation</th>
-                            <th>Action</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {employees.map((emp) => (
-
-                            <tr key={emp.id}>
-
-                                <td>{emp.id}</td>
-                                <td>{emp.name}</td>
-                                <td>{emp.email}</td>
-                                <td>{emp.department}</td>
-                                <td>{emp.designation}</td>
-
-                                <td>
-
-                                    <button
-                                        onClick={() => deleteEmployee(emp.id)}
-                                    >
-                                        Delete
-                                    </button>
-
-                                </td>
-
-                            </tr>
-
-                        ))}
-
-                    </tbody>
-
-                </table>
+              <p>
+                Manage employees and their assigned assets.
+              </p>
 
             </div>
 
-        </>
+            <button className="primary-button">
+              + Add Employee
+            </button>
 
-    );
+          </div>
 
+
+          <div className="table-card">
+
+            <div className="table-toolbar">
+
+              <div>
+
+                <h2>
+                  All Employees
+                </h2>
+
+                <span>
+                  {filteredEmployees.length} employees
+                </span>
+
+              </div>
+
+              <div className="table-search">
+
+                <span>⌕</span>
+
+                <input
+                  type="text"
+                  placeholder="Search employees..."
+                  value={search}
+                  onChange={(e) =>
+                    setSearch(e.target.value)
+                  }
+                />
+
+              </div>
+
+            </div>
+
+
+            <div className="table-wrapper">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+                    <th>Employee</th>
+                    <th>Employee ID</th>
+                    <th>Department</th>
+                    <th>Assets</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  {filteredEmployees.map((employee) => (
+
+                    <tr key={employee.id}>
+
+                      <td>
+
+                        <div className="employee-cell">
+
+                          <div className="employee-avatar">
+                            {employee.name
+                              .charAt(0)
+                              .toUpperCase()}
+                          </div>
+
+                          <div>
+
+                            <strong>
+                              {employee.name}
+                            </strong>
+
+                            <span>
+                              {employee.email}
+                            </span>
+
+                          </div>
+
+                        </div>
+
+                      </td>
+
+                      <td>
+                        <strong className="asset-id">
+                          {employee.id}
+                        </strong>
+                      </td>
+
+                      <td>
+                        {employee.department}
+                      </td>
+
+                      <td>
+                        <span className="asset-count">
+                          {employee.assets}
+                        </span>
+                      </td>
+
+                      <td>
+
+                        <span
+                          className={`status ${
+                            employee.status === "Active"
+                              ? "status-active"
+                              : "status-inactive"
+                          }`}
+                        >
+                          {employee.status}
+                        </span>
+
+                      </td>
+
+                      <td>
+
+                        <button className="action-button">
+                          ⋮
+                        </button>
+
+                      </td>
+
+                    </tr>
+
+                  ))}
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          </div>
+
+        </main>
+
+      </div>
+
+    </div>
+  );
 }
 
 export default Employees;
